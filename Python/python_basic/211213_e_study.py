@@ -36,7 +36,9 @@ print()
 a = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 a = list(map(str,list(map(lambda x : int(x)+1, a))))
 print(a)
-
+b = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+b = list(map(lambda x : int(x)+1, b))
+print(b)
 
 
 
@@ -45,14 +47,15 @@ print()
 # Study3))
 a = ['soccer', 'basket ball', 'base ball', 'basket ball', 'tennis']
 
-basketBallCount = a.count("basket ball")
-baseBallCount = a.count("base ball")
-soccerCount = a.count("soccer")
-print("basket ball", basketBallCount)
-print("base ball", baseBallCount)
-print("soccer", soccerCount)
-
-
+# basketBallCount = a.count("basket ball")
+# baseBallCount = a.count("base ball")
+# soccerCount = a.count("soccer")
+# print("basket ball", basketBallCount)
+# print("base ball", baseBallCount)
+# print("soccer", soccerCount)
+print(set(a))
+for sport in set(a):
+    print(sport,a.count(sport))
 
 print()
 print()
@@ -61,6 +64,7 @@ print()
 # 예상 출력 : 0 1 2 4 8 16 32 64 128 256 256 256
 
 p=1;
+n=0;
 numList=None
 for i in range(-1,11):
     if i == -1:
@@ -70,3 +74,10 @@ for i in range(-1,11):
         p=p*2;
     else:
         print(p,end=' ');
+print()
+for j in range(12):
+    print(n,end=' ')
+    if n <2:
+        n+=1
+    elif n < 256:
+        n*=2
