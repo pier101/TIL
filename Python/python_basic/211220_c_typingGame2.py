@@ -1,5 +1,3 @@
-
-
 # 업그레이드 타이핑 게임 제작
 # 타이핑 게임 제작 및 기본 완성
 
@@ -69,7 +67,7 @@ et = format(et,".3f")
 if cor_cnt>=3:
     print("합격")
 else:
-    print("불합겹")
+    print("불합격")
 
 # 기록 db 삽입
 cursor.execute("INSERT INTO records('cor_cnt','record','regdate') VALUES (?,?,?)",(cor_cnt, et, datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')))
