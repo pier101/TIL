@@ -46,7 +46,7 @@ contract A{
 // B는 A에서 파생됩니다.
 contract B is A{
     int public xx = f3(); // internal 함수를 호출할 수 있음  
-    // int public yy = f1(); // ERROR => f1()은 private이며 파생된 계약에서 호출할 수 없습니다.
+    // int public yy = f1(); // ERROR => f1()은 private이며 파생된 계약에서 호출할 수 없음.
 }
 
 contract C{
