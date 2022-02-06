@@ -23,7 +23,7 @@ contract A{
     return a;
     }
     
-    // 이 계약과 파생 계약 내에서만 호출할 수 있습니다.
+    // 이 계약과 파생 계약 내에서만 호출할 수 있음.
     function f3() internal view returns(int){
     return x;
     }
