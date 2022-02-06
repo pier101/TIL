@@ -8,24 +8,24 @@ contract A{
     
     // public function
     function get_y() public view returns(int){
-    return y;
+      return y;
     }
     
     
     // private function, 이 계약 내에서만 호출할 수 있음(파생된 계약 내에서 아님)
     function f1() private view returns(int){
-    return x;
+      return x;
     }
     
     function f2() public view returns(int){
-    int a;
-    a = f1(); // f1을 호출할 수 있음 
+      int a;
+      a = f1(); // f1을 호출할 수 있음 
     return a;
     }
     
     // 이 계약과 파생 계약 내에서만 호출할 수 있음.
     function f3() internal view returns(int){
-    return x;
+      return x;
     }
     
     // 외부 계약 및 애플리케이션에서만 호출할 수 있음(공개보다 효율적임)
@@ -35,10 +35,10 @@ contract A{
     
     
     function f5() public view returns(int){
-    int b;
-    // b = f4(); // ERROR => f4() is external
-    b = f3(); // OK => f3() is internal
-    b = f1(); // OK => f1() is private
+      int b;
+      // b = f4(); // ERROR => f4() is external
+      b = f3(); // OK => f3() is internal
+      b = f1(); // OK => f1() is private
     return b;
     }
 }
