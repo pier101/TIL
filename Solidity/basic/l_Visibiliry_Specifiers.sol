@@ -30,7 +30,7 @@ contract A{
     
     // 외부 계약 및 애플리케이션에서만 호출할 수 있음(공개보다 효율적임)
     function f4() external view returns(int){
-    return x;
+      return x;
     }
     
     
