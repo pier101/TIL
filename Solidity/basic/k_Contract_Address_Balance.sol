@@ -10,7 +10,7 @@ contract Deposit{
         owner = msg.sender;    
     }
 
-    // Receive() 또는 fallback()은 contract가 다음과 같이 ETH를 수신하는 데 필수.
+    // Receive() 또는 fallback()은 contract가 ETH를 수신하는 데 필수.
     // ETH를 컨트랙트의 주소로 전송
 
     // ETH를 컨트랙트 주소로 보낼 때 실행되는 receive() 함수 선언
