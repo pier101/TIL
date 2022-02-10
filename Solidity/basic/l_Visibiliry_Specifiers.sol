@@ -50,7 +50,7 @@ contract B is A{
 }
 
 contract C{
-    A public contract_a = new A(); // C는 A를 배포.  
+    A public contract_a = new A(); // contract A 변수 저장.  
     int public xx = contract_a.f4(); // OK => f4() is external
     // int public y = contract_a.f1(); // ERROR => f1() is private
     // int public yy = contract_a.f3(); // ERROR => f3() is internal
