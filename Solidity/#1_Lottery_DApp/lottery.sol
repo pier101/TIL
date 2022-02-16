@@ -24,6 +24,25 @@ contract Lotterty {
         require(msg.sender == manager, "you are not manager!");
         return address(this).balance;
     }
+
+    function random() private view return(uint) {
+        // # 난수 생성
+        return uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp, players.length)));
+    }
+
+    function pickWinner() public {
+        require(msg.sender == manager);
+        // # 최소 3명 이상이 참여해야 우승자 선택
+        require(players.length >= 3);
+
+        uint r = random();
+        address payable winner;
+        uint index = r % players.length;
+        winner = players[index];
+
+        winner.transfer(getBalance());
+        players = new address payable[](0); // # W재설정
+    }
 }
 
 /*
@@ -33,5 +52,12 @@ contract Lotterty {
     4. 계약의 잔액을 wei로 반환하는 함수 만들기 (getBalance())
     --- 중간 test ---
     5. 데이터 유효성 검사 & ethereum에서 다양한 조건 test
+    --- 중간 test ---
+    6. 난수 생성(승자 가리는용) (random())
+    --- 중간 test ---
+    7. 당첨금 승자에게 이체 함수 작성 (pickWinner())
+    --- 중간 test ---
+    8. 당첨 후 초기화
+    --- test ---
 
- */
+ *
