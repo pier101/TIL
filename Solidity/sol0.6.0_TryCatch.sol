@@ -28,13 +28,13 @@ contract B {
         try instA.funCAssertFailure() {
             return true;
         } catch Error(string memory reason) {
-            // This is executed in case
-            // revert was called inside getData
-            // and a reason string was provided.
+            // 이 부분 실행되는 경우
+            // getData 내부에서 revert명령문 호출될 때
+            // reason이 string type으로 제공 
             emit Error(reason);
             return false;
         } catch (bytes memory lowLevelData) {
-            // This is executed in case revert() was used
+            // revert()함수가 사용될 떄 이 부분 실행
             // or there was a failing assertion, division
             // by zero, etc. inside getData.
             emit LowLevelError(lowLevelData);
