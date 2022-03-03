@@ -12,50 +12,45 @@ const App = () => {
   const [web3, setWeb3] = useState()
   const [accounts, setAccounts] = useState()
   const [rabdomPickContract, setRandomPickContract] = useState()
-  const [itemList, setItemList] = useState(""); // 주소
-  const [itemList2, setItemList2] = useState(); 
-  const itemlistarr=[];
-  const init = async () => {
+  const [address, setAddress] = useState(""); // 주소
+  const [itemList, setItemList] = useState(); 
 
+  const itemListArr=[];
+
+  const init = async () => {
     try {
       console.log("유즈이펙트1")
-      // 네트워크 공급자 및 web3 인스턴스를 가져옵니다.
-      const web3 = await getWeb3();
-      // web3를 사용하여 사용자 계정을 가져옵니다.
-      const accounts = await web3.eth.getAccounts(); 
 
-      console.log(accounts);
-      // Get the contract instance.
-      
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts(); 
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = await RabdomPick.networks[networkId];
-      // 계약 인스턴스를 가져옵니다.
+
       const rabdomPick = await new web3.eth.Contract(
         RabdomPick.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      
       setWeb3(web3);
       setAccounts(accounts);
       setRandomPickContract(rabdomPick);
 
+      //랜덤 뽑기 이벤트
       await rabdomPick.events.pickResult({filter:{_pickAddr:accounts[0]}}).on("data",async(e)=> {
+        itemListArr.push(e.returnValues._pickAddr)
+        setAddress(itemListArr);
 
-        itemlistarr.push(e.returnValues._pickAddr)
-        setItemList(itemlistarr)
-        // console.log(itemList)
         alert(e.returnValues._pickAddr + " 님\n"+ "아이템 " + e.returnValues._pickItem + " 을 획득하셨습니다!!")
+        if (e.returnValues._pickCount % 5 == 0) {
+          alert("**** 보너스 뽑기 가능 ****")
+        }
       })
-      await rabdomPick.events.bonusPickResult({filter:{_pickAddr:accounts[0]}}).on("data",async(e)=> {
 
-        // itemlistarr.push(e.returnValues._pickAddr)
-        // setItemList(itemlistarr)
-        // console.log(itemList)
+      //보너스 뽑기 이벤트
+      await rabdomPick.events.bonusPickResult({filter:{_pickAddr:accounts[0]}}).on("data",async(e)=> {
         alert("== 보너스 뽑기 ==\n" + e.returnValues._pickAddr + " 님\n"+ "아이템 " + e.returnValues._pickItem + " 을 획득하셨습니다!!")
       })
 
-      console.log("유즈이펙트");
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
@@ -66,27 +61,27 @@ const App = () => {
     init();
   }, [])
 
-  // const initialization = { web3, accounts, voteContract, isLoading }
+//--------------------------------------------
 
+  //랜덤 뽑기 함수
   const pickItem = async()=>{
     await rabdomPickContract.methods.randomPick().send({from:accounts[0],gas:200000,gasPrice:"50000000000",value: web3.utils.toWei("0.02", "ether")})
     .then((result)=>{
       console.log(result)
-      console.log("픽아이템",itemList)
     })
 
     await rabdomPickContract.methods.getItemsPerAddress().call({from:accounts[0]})
     .then(result => {
-      setItemList2(result);
+      setItemList(result);
       console.log(result)
     })  
   }
     
+  //보너스 뽑기 함수
   const pickItem_bonus = async()=>{
     await rabdomPickContract.methods.bonusPick().send({from:accounts[0]})
     .then((result)=>{
       console.log(result)
-      console.log("픽아이템",itemList)
     })
     .catch((err)=>{
       alert("보너스 기회가 없습니다. 아이템을 5회 뽑을때마다 보너스 기회가 1번 주어집니다.");
@@ -95,12 +90,12 @@ const App = () => {
 
     await rabdomPickContract.methods.getItemsPerAddress().call({from:accounts[0]})
     .then(result => {
-      setItemList2(result);
+      setItemList(result);
       console.log(result)
     })  
   }
     
-  
+  //----------------------------------------------------
 
   return (
     <BrowserRouter>
@@ -112,12 +107,12 @@ const App = () => {
       
       <br />
       <h2>아이템 리스트</h2>
-      계정 주소 : {itemList}
-      {itemList2 && itemList2.map((item, i)=>{
+      계정 주소 : {address}
+      {itemList && itemList.map((item, i)=>{
         return (
           <div key={i}>
           <div>아이템 넘버 : {item}</div>
-          <div>{console.log(item)}</div>
+
           </div>
         )
       })}
