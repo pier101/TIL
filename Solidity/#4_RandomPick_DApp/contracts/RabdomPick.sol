@@ -25,7 +25,7 @@ contract RabdomPick {
 
 
     function randomPick () public payable {
-        require(msg.value == 2*10**16);
+        require(msg.value == 2*10**16, "value is not correct");
         uint random = itemList[randomItem()];
         itemsPerAddress[msg.sender].push(random);
 
@@ -39,7 +39,7 @@ contract RabdomPick {
     }
 
     function bonusPick() public {
-        require(bonusTurn[msg.sender]==true,"you are not bonus turn");
+        require(bonusTurn[msg.sender]==true,"no bonus turn");
         pickCount++;
         uint bonus = itemList[randomItem()];
         itemsPerAddress[msg.sender].push(bonus);
