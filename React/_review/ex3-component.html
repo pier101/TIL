@@ -1,0 +1,33 @@
+<!-- ex3-component.html : 컴포넌트 생성, DOM render -->
+<!DOCTYPE html>
+<html lang="en">
+<head>...</head>
+<body>
+<div id="root"></div>
+<button id="btn_plus">+</button>
+<script type="text/javascript">
+    const component = {
+        message: "init",
+        count: 0,
+        render() {
+            return `<p>${this.message} : ${this.count}</p>`;
+        }
+    };
+
+    function render(dom, component) {
+        // 컴포넌트 render, DOM 에 그려준다.
+        root.innerHTML = component.render();
+    }
+
+    render(document.querySelector("#root"), component);
+
+    document.querySelector("#btn_plus").addEventListener("click", () => {
+        // 외부에서 컴포넌트의 값을 변경하는 행위
+        component.message = "update";
+        component.count = component.count + 1;
+
+        render(document.querySelector("#root"), component);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!-- ex7.html : Function / Class Component -->
+<!DOCTYPE html>
+<html lang="en">
+<head>...</head>
+<body>
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  // @ Function
+  // function Component(props) {
+  //   return (
+  //           <div>
+  //             <h1>{props.message} 이것은 함수로 만든 컴포넌트 입니다.</h1>
+  //           </div>
+  //   );
+  // }
+  //
+  // ReactDOM.render(
+  //         <Component message="안녕하세요!!!" />,
+  //         document.querySelector('#root'),
+  // );
+
+  // @ Class
+  class Component extends React.Component {
+    // defaultProps
+    static defaultProps = {
+      message: '안녕하세요!!!',
+    };
+    // state 생성 방식 1
+    state = {
+      s: '스테이트'
+    };
+    // state 생성 방식 2
+    constructor(props) {
+      super(props);
+      this.state = {s: '스테이트'};
+    }
+    render() {
+      return (
+              <>
+              <div>
+                <h1>
+                  {this.props.message} >> 클래스를 상속하여 만든 컴포넌트
+                  입니다.
+                </h1>
+              </div>
+              <div onClick={() => {
+                  this.setState({s: '새 스테이트'});
+              }}>
+                {this.state.s}
+              </div>
+                </>
+      );
+    }
+  }
+
+  ReactDOM.render(
+          <Component message="hello!!!" />,
+          document.querySelector('#root'),
+  );
+</script>
+</body>
+</html>
